@@ -63,7 +63,9 @@
     }
 
     // ---------- Intro ----------
-    if (hasGsap && !reduceMotion) {
+    // Skipped when the page loads in a background tab: browsers pause animation frames
+    // there, which would leave the hero invisible until the tab is shown.
+    if (hasGsap && !reduceMotion && !document.hidden) {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
         tl.from('.header__inner > *', { y: -16, opacity: 0, duration: 0.6, stagger: 0.06, clearProps: 'all' })
           .from('.hero__line, .page-hero h1, .page-hero .eyebrow', { y: 36, opacity: 0, duration: 0.9, stagger: 0.12, clearProps: 'all' }, '-=0.35')
